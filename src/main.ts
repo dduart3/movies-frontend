@@ -1,6 +1,9 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { AppComponent } from './app/app.component';
 
-bootstrapApplication(App, appConfig)
+// ¡Asegúrate de que esta línea esté presente y descomentada!
+import 'zone.js'; // Importa Zone.js para la detección de cambios de Angular
+
+bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));

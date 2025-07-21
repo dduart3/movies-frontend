@@ -1,0 +1,47 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Iniciar Sesión</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+        <input type="email" id="email" formControlName="email"
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+               [ngClass]="{ 'border-red-500': f['email'].invalid && f['email'].touched }">
+        <div *ngIf="f['email'].invalid && f['email'].touched" class="text-red-500 text-xs mt-1">
+          <div *ngIf="f['email'].errors?.['required']">El correo electrónico es requerido.</div>
+          <div *ngIf="f['email'].errors?.['email']">El correo electrónico no es válido.</div>
+        </div>
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+        <input type="password" id="password" formControlName="password"
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+               [ngClass]="{ 'border-red-500': f['password'].invalid && f['password'].touched }">
+        <div *ngIf="f['password'].invalid && f['password'].touched" class="text-red-500 text-xs mt-1">
+          <div *ngIf="f['password'].errors?.['required']">La contraseña es requerida.</div>
+        </div>
+      </div>
+
+      <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Error:</strong>
+        <span class="block sm:inline ml-2">{{ error }}</span>
+      </div>
+
+      <button type="submit" [disabled]="loading || loginForm.invalid"
+              class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              [ngClass]="{'opacity-50 cursor-not-allowed': loading || loginForm.invalid}">
+        <span *ngIf="loading" class="animate-spin mr-2 h-5 w-5 border-t-2 border-r-2 border-white rounded-full"></span>
+        {{ loading ? 'Iniciando Sesión...' : 'Iniciar Sesión' }}
+      </button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-gray-600">
+      ¿No tienes una cuenta?
+      <a [routerLink]="['/auth/register']" class="font-medium text-indigo-600 hover:text-indigo-500">
+        Regístrate
+      </a>
+    </p>
+  </div>
+</div>

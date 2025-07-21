@@ -1,0 +1,21 @@
+<nav class="bg-gray-800 p-4">
+  <div class="container flex justify-between items-center">
+    <a [routerLink]="['/movies']" class="text-white text-2xl font-bold">🎬 MovieApp</a>
+
+    <div class="flex items-center space-x-4">
+      <ng-container *ngIf="!currentUser">
+        <a [routerLink]="['/auth/login']" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Iniciar Sesión</a>
+        <a [routerLink]="['/auth/register']" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Registrarse</a>
+      </ng-container>
+
+      <ng-container *ngIf="currentUser">
+        <a [routerLink]="['/movies']" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Películas</a>
+        <a *ngIf="isAdmin()" [routerLink]="['/movies/create']" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Crear Película</a>
+        <a *ngIf="isAdmin()" [routerLink]="['/admin/users']" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Gestionar Usuarios</a>
+        
+        <span class="text-gray-300 text-sm">Bienvenido, {{ currentUser.username }} ({{ currentUser.role }})</span>
+        <button (click)="logout()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium">Cerrar Sesión</button>
+      </ng-container>
+    </div>
+  </div>
+</nav>
