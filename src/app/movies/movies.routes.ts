@@ -1,12 +1,20 @@
 import { Routes } from '@angular/router';
-import { MovieListComponent } from './components/movie-list/movie-list.component'; // Importa el componente
-import { MovieDetailComponent } from './components/movie-detail/movie-detail.component'; // Importa el componente
-import { AdminGuard } from '../shared/guards/admin.guard'; // Necesitas este guard (ya existe)
+import { MovieListComponent } from './components/movie-list/movie-list.component';
+import { MovieDetailComponent } from './components/movie-detail/movie-detail.component';
+import { MovieFormComponent } from './components/movie-form/movie-form.component'; // ¡Importa el nuevo componente!
+import { AdminGuard } from '../shared/guards/admin.guard';
 
 export const MOVIES_ROUTES: Routes = [
-  { path: '', component: MovieListComponent }, // Ruta para listar todas las películas
-  // La ruta para crear/editar la crearemos en la próxima sección
-  // { path: 'create', component: MovieFormComponent, canActivate: [AdminGuard] },
-  // { path: 'edit/:id', component: MovieFormComponent, canActivate: [AdminGuard] },
-  { path: ':id', component: MovieDetailComponent } // Ruta para ver los detalles de una película específica
+  { path: '', component: MovieListComponent },
+  {
+    path: 'create',
+    component: MovieFormComponent,
+    canActivate: [AdminGuard] // Solo administradores pueden crear películas
+  },
+  {
+    path: 'edit/:id',
+    component: MovieFormComponent,
+    canActivate: [AdminGuard] // Solo administradores pueden editar películas
+  },
+  { path: ':id', component: MovieDetailComponent }
 ];

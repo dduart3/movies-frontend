@@ -121,8 +121,8 @@ export class AuthService {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('currentUser');
     this.userSubject.next(null); // Emite null para que los suscriptores sepan que no hay usuario
-    this.router.navigate(['/auth/login']); // Redirige al login
-  }
+    this.router.navigate(['/login']); // Cambia a /login si esa es tu ruta
+}
 
   // Renueva el access token usando el refresh token
   // Usado principalmente por el interceptor cuando el access token expira

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Necesario para *ngIf
-import { ActivatedRoute, RouterLink } from '@angular/router'; // ActivatedRoute para obtener el ID de la URL, RouterLink para el botón de regreso
-import { Movie, MovieService } from '../../services/movie.service'; // Importa el servicio y la interfaz
-import { AuthService } from '../../../auth/services/auth.service'; // Para verificar roles
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Movie, MovieService } from '../../services/movie.service';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-movie-detail',
-  standalone: true, // ¡Este es un componente standalone!
+  standalone: true,
   imports: [
     CommonModule,
-    RouterLink // Asegúrate de importar RouterLink
+    RouterLink
   ],
   templateUrl: './movie-detail.component.html',
 })
@@ -19,9 +19,9 @@ export class MovieDetailComponent implements OnInit {
   error: string | null = null;
 
   constructor(
-    private route: ActivatedRoute, // Para acceder a los parámetros de la URL
+    private route: ActivatedRoute,
     private movieService: MovieService,
-    private authService: AuthService // Inyecta AuthService
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -52,7 +52,6 @@ export class MovieDetailComponent implements OnInit {
     });
   }
 
-  // Comprueba si el usuario actual es un administrador
   isAdmin(): boolean {
     return this.authService.hasRole('admin');
   }

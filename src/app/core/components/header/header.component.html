@@ -1,0 +1,21 @@
+<nav class="bg-gray-800 p-4 shadow-md">
+  <div class="container mx-auto flex justify-between items-center">
+    <a [routerLink]="['/']" class="text-white text-2xl font-bold">MovieApp</a>
+
+    <div class="flex items-center space-x-4">
+      <a [routerLink]="['/movies']" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Películas</a>
+
+      <a *ngIf="isAdmin" [routerLink]="['/admin/users']"
+         class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium bg-gray-700">Gestión de Usuarios</a>
+
+      <ng-container *ngIf="isLoggedIn; else authButtons">
+        <a [routerLink]="['/profile']" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Perfil</a>
+        <button (click)="logout()" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium bg-red-600 hover:bg-red-700">Cerrar Sesión</button>
+      </ng-container>
+      <ng-template #authButtons>
+        <a [routerLink]="['/login']" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Iniciar Sesión</a>
+        <a [routerLink]="['/register']" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium bg-blue-600 hover:bg-blue-700">Registrarse</a>
+      </ng-template>
+    </div>
+  </div>
+</nav>

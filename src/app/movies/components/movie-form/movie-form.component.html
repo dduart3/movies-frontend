@@ -1,0 +1,77 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">
+      {{ isEditMode ? 'Editar Película' : 'Añadir Nueva Película' }}
+    </h2>
+
+    <div *ngIf="loading && isEditMode" class="text-center text-gray-600 mb-4">
+      <div class="animate-spin inline-block h-6 w-6 border-4 border-t-blue-500 border-r-blue-500 border-b-blue-500 border-l-transparent rounded-full" role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+      <p>Cargando datos de la película...</p>
+    </div>
+
+    <form [formGroup]="movieForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <div>
+        <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
+        <input type="text" id="title" formControlName="title"
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+               [ngClass]="{ 'border-red-500': f['title'].invalid && f['title'].touched }">
+        <div *ngIf="f['title'].invalid && f['title'].touched" class="text-red-500 text-xs mt-1">
+          <div *ngIf="f['title'].errors?.['required']">El título es requerido.</div>
+        </div>
+      </div>
+
+      <div>
+        <label for="director" class="block text-sm font-medium text-gray-700">Director</label>
+        <input type="text" id="director" formControlName="director"
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+               [ngClass]="{ 'border-red-500': f['director'].invalid && f['director'].touched }">
+        <div *ngIf="f['director'].invalid && f['director'].touched" class="text-red-500 text-xs mt-1">
+          <div *ngIf="f['director'].errors?.['required']">El director es requerido.</div>
+        </div>
+      </div>
+
+      <div>
+        <label for="releaseYear" class="block text-sm font-medium text-gray-700">Año de Lanzamiento</label>
+        <input type="number" id="releaseYear" formControlName="releaseYear" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+               [ngClass]="{ 'border-red-500': f['releaseYear'].invalid && f['releaseYear'].touched }"> <div *ngIf="f['releaseYear'].invalid && f['releaseYear'].touched" class="text-red-500 text-xs mt-1"> <div *ngIf="f['releaseYear'].errors?.['required']">El año de lanzamiento es requerido.</div> <div *ngIf="f['releaseYear'].errors?.['min']">El año no puede ser tan antiguo.</div> <div *ngIf="f['releaseYear'].errors?.['max']">El año no puede ser en el futuro lejano.</div> </div>
+      </div>
+
+      <div>
+        <label for="genre" class="block text-sm font-medium text-gray-700">Género (separado por comas)</label>
+        <input type="text" id="genre" formControlName="genre"
+               placeholder="Ej: Acción, Aventura, Fantasía"
+               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+               [ngClass]="{ 'border-red-500': f['genre'].invalid && f['genre'].touched }">
+        <div *ngIf="f['genre'].invalid && f['genre'].touched" class="text-red-500 text-xs mt-1">
+          <div *ngIf="f['genre'].errors?.['required']">Al menos un género es requerido.</div>
+        </div>
+      </div>
+
+      <div>
+        <label for="synopsis" class="block text-sm font-medium text-gray-700">Sinopsis (Opcional)</label>
+        <textarea id="synopsis" formControlName="synopsis" rows="4"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+      </div>
+
+      <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Error:</strong>
+        <span class="block sm:inline ml-2">{{ error }}</span>
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <a [routerLink]="['/movies']"
+           class="inline-flex items-center px-6 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Cancelar
+        </a>
+        <button type="submit" [disabled]="loading || movieForm.invalid"
+                class="inline-flex items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                [ngClass]="{'opacity-50 cursor-not-allowed': loading || movieForm.invalid}">
+          <span *ngIf="loading" class="animate-spin mr-2 h-5 w-5 border-t-2 border-r-2 border-white rounded-full"></span>
+          {{ loading ? (isEditMode ? 'Actualizando...' : 'Creando...') : (isEditMode ? 'Actualizar Película' : 'Crear Película') }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

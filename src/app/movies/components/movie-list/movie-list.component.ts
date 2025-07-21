@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Necesario para *ngIf, *ngFor
-import { RouterLink } from '@angular/router'; // Para enlaces a detalles y edición
-import { Movie, MovieService } from '../../services/movie.service'; // Importa el servicio y la interfaz
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { Movie, MovieService } from '../../services/movie.service';
 import { AuthService } from '../../../auth/services/auth.service'; // Para comprobar roles de usuario
 
 @Component({
   selector: 'app-movie-list',
-  standalone: true, // ¡Este es un componente standalone!
+  standalone: true,
   imports: [
     CommonModule,
-    RouterLink // Asegúrate de importar RouterLink
+    RouterLink
   ],
   templateUrl: './movie-list.component.html',
 })
@@ -20,7 +20,7 @@ export class MovieListComponent implements OnInit {
 
   constructor(
     private movieService: MovieService,
-    private authService: AuthService // Inyecta AuthService para verificación de rol
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +43,6 @@ export class MovieListComponent implements OnInit {
     });
   }
 
-  // Comprueba si el usuario actual es un administrador
   isAdmin(): boolean {
     return this.authService.hasRole('admin');
   }
@@ -53,7 +52,7 @@ export class MovieListComponent implements OnInit {
       this.movieService.deleteMovie(id).subscribe({
         next: () => {
           console.log('Película eliminada con éxito.');
-          this.loadMovies(); // Recarga la lista de películas después de la eliminación
+          this.loadMovies();
         },
         error: (err) => {
           this.error = err.message || 'Error al eliminar la película.';

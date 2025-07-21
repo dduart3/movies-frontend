@@ -17,15 +17,9 @@
   </div>
 
   <div *ngIf="!loading && !error && movie" class="bg-white rounded-lg shadow-xl overflow-hidden flex flex-col md:flex-row">
-    
     <div class="md:w-2/3 p-8">
-      <h2 class="text-4xl font-extrabold text-gray-900 mb-4">{{ movie.title }} <span class="text-gray-500 text-2xl">({{ movie.releaseYear }})</span></h2>
-      <p class="text-lg text-gray-700 mb-2"><strong>Director:</strong> {{ movie.director }}</p>
+      <h2 class="text-4xl font-extrabold text-gray-900 mb-4">{{ movie.title }} <span class="text-gray-500 text-2xl">({{ movie.releaseYear }})</span></h2> <p class="text-lg text-gray-700 mb-2"><strong>Director:</strong> {{ movie.director }}</p>
       <p class="text-lg text-gray-700 mb-4"><strong>Género:</strong> {{ movie.genre.join(', ') || 'N/A' }}</p>
-      <div *ngIf="movie.rating" class="flex items-center text-lg text-gray-700 mb-4">
-        <strong>Calificación:</strong>
-        <span class="ml-2 bg-yellow-400 text-gray-900 px-2 py-1 rounded-full text-base font-semibold">{{ movie.rating }}</span>
-      </div>
       <p class="text-gray-800 leading-relaxed mb-6"><strong>Sinopsis:</strong> {{ movie.synopsis || 'Sin sinopsis disponible.' }}</p>
       
       <div class="flex flex-wrap gap-4 mt-6">
