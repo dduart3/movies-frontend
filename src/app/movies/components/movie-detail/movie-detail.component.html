@@ -1,0 +1,51 @@
+<div class="p-4">
+  <div *ngIf="loading" class="text-center text-gray-600">
+    <div class="animate-spin inline-block h-8 w-8 border-4 border-t-blue-500 border-r-blue-500 border-b-blue-500 border-l-transparent rounded-full" role="status">
+      <span class="sr-only">Cargando...</span>
+    </div>
+    <p>Cargando detalles de la película...</p>
+  </div>
+
+  <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <strong class="font-bold">Error:</strong>
+    <span class="block sm:inline ml-2">{{ error }}</span>
+    <div class="mt-4">
+      <a [routerLink]="['/movies']" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Volver a la lista
+      </a>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && movie" class="bg-white rounded-lg shadow-xl overflow-hidden flex flex-col md:flex-row">
+    
+    <div class="md:w-2/3 p-8">
+      <h2 class="text-4xl font-extrabold text-gray-900 mb-4">{{ movie.title }} <span class="text-gray-500 text-2xl">({{ movie.releaseYear }})</span></h2>
+      <p class="text-lg text-gray-700 mb-2"><strong>Director:</strong> {{ movie.director }}</p>
+      <p class="text-lg text-gray-700 mb-4"><strong>Género:</strong> {{ movie.genre.join(', ') || 'N/A' }}</p>
+      <div *ngIf="movie.rating" class="flex items-center text-lg text-gray-700 mb-4">
+        <strong>Calificación:</strong>
+        <span class="ml-2 bg-yellow-400 text-gray-900 px-2 py-1 rounded-full text-base font-semibold">{{ movie.rating }}</span>
+      </div>
+      <p class="text-gray-800 leading-relaxed mb-6"><strong>Sinopsis:</strong> {{ movie.synopsis || 'Sin sinopsis disponible.' }}</p>
+      
+      <div class="flex flex-wrap gap-4 mt-6">
+        <a [routerLink]="['/movies']"
+           class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+          </svg>
+          Volver a la lista
+        </a>
+        <ng-container *ngIf="isAdmin()">
+          <a [routerLink]="['/movies/edit', movie._id]"
+             class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+            <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.38-2.828-2.828z" />
+            </svg>
+            Editar Película
+          </a>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

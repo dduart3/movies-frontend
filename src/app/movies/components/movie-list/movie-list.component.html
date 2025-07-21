@@ -1,0 +1,55 @@
+<div class="p-4">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">Lista de Películas</h2>
+
+  <div *ngIf="isAdmin()" class="mb-6">
+    <a [routerLink]="['/movies/create']"
+       class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+      </svg>
+      Añadir Nueva Película
+    </a>
+  </div>
+
+  <div *ngIf="loading" class="text-center text-gray-600">
+    <div class="animate-spin inline-block h-8 w-8 border-4 border-t-blue-500 border-r-blue-500 border-b-blue-500 border-l-transparent rounded-full" role="status">
+      <span class="sr-only">Cargando...</span>
+    </div>
+    <p>Cargando películas...</p>
+  </div>
+
+  <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <strong class="font-bold">Error:</strong>
+    <span class="block sm:inline ml-2">{{ error }}</span>
+  </div>
+
+  <div *ngIf="!loading && !error && movies.length === 0" class="text-center text-gray-600 p-8 border rounded-lg bg-white shadow">
+    <p class="text-lg">No hay películas disponibles. ¡Sé el primero en añadir una!</p>
+  </div>
+
+  <div *ngIf="!loading && !error && movies.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let movie of movies" class="bg-white rounded-lg shadow-md overflow-hidden">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ movie.title }} ({{ movie.releaseYear }})</h3>
+        <p class="text-gray-600 text-sm mb-1">Director: {{ movie.director }}</p>
+        <p class="text-gray-600 text-sm mb-4">Género: {{ movie.genre.join(', ') || 'N/A' }}</p>
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+          <a [routerLink]="['/movies', movie._id]"
+             class="flex-grow text-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            Ver Detalles
+          </a>
+          <ng-container *ngIf="isAdmin()">
+            <a [routerLink]="['/movies/edit', movie._id]"
+               class="flex-grow text-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+              Editar
+            </a>
+            <button (click)="deleteMovie(movie._id!)"
+                    class="flex-grow text-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+              Eliminar
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
