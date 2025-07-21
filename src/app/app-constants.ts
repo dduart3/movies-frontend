@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'http://localhost:5000/api'; // Asegúrate de que este puerto coincida con tu backend
+export const API_BASE_URL = 'https://movies-api-6k0x.onrender.com/api'; // Asegúrate de que este puerto coincida con tu backend
